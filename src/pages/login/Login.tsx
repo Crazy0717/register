@@ -9,7 +9,9 @@ import 'react-toastify/dist/ReactToastify.css';
 const Login = () => {
   const [userEmail, setUserEmail] = useState<string>();
   const [userPassword, setUserPasword] = useState<string>();
-  const notify = () => toast.info("Please wait...");
+  const notifyInfo = () => toast.info("Please wait...");
+  const notifySuccess = () => toast.success("Regestered successfully ✅");
+  const notifyError = () => toast.error("Error: " );
 
   const dispatch = useAppDispatch();
   const { isLoading } = useAppSelector((state) => state.auth);
@@ -21,14 +23,16 @@ const Login = () => {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    notify()
+    notifyInfo()
     dispatch(loginStart());
 
     try {
       const response = await authServiceData.loginUser(user);
       dispatch(loginSuccess(response.user));
+      notifySuccess()
     } catch (error) {
       dispatch(loginError());
+      notifyError()
     }
   };
 

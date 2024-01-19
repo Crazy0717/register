@@ -7,11 +7,15 @@ import {
 } from "../../slice/auth";
 import { useState } from "react";
 import authServiceData from "../../service/auth";
+import { ToastContainer, toast } from "react-toastify";
 
 const Register = () => {
   const [userName, setUserName] = useState<string>();
   const [userEmail, setUserEmail] = useState<string>();
   const [userPassword, setUserPasword] = useState<string>();
+  const notifyInfo = () => toast.info("Please wait...");
+  const notifySuccess = () => toast.success("Regestered successfully ✅");
+  const notifyError = () => toast.error("Error: " );
 
   const dispatch = useAppDispatch();
   const { isLoading } = useAppSelector((state) => state.auth);
@@ -25,17 +29,21 @@ const Register = () => {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     dispatch(registerStart());
+    notifyInfo()
 
     try {
       const response = await authServiceData.registerUser(user);
       dispatch(registerSuccess(response.user));
+      notifySuccess()
     } catch (error) {
       dispatch(registerError());
+      notifyError()
     }
   };
   
   return (
     <form className="text-center w-25 mx-auto">
+      <ToastContainer />
       <img
         className="m-4 h-25 "
         src="https://www.freeiconspng.com/thumbs/login-icon/user-login-icon-14.png"
