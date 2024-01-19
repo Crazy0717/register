@@ -10,7 +10,7 @@ const Login = () => {
   const [userEmail, setUserEmail] = useState<string>();
   const [userPassword, setUserPasword] = useState<string>();
   const notifyInfo = () => toast.info("Please wait...");
-  const notifySuccess = () => toast.success("Regestered successfully ✅");
+  const notifySuccess = () => toast.success("Logined successfully ✅");
   const notifyError = () => toast.error("Error: " );
 
   const dispatch = useAppDispatch();
